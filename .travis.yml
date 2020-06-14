@@ -1,0 +1,32 @@
+dist: xenial
+
+language: cpp
+
+before_script:
+- sudo apt update
+- sudo apt install libboost-test-dev -y
+- sudo apt install doxygen -y
+- sudo apt install graphviz -y
+
+script:
+- doxygen Doxyfile
+- cmake .
+- cmake --build .
+- cmake --build . --target package
+
+deploy:
+- provider: pages
+  skip-cleanup: true
+  local_dir: docs/html
+  github-token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: master
+
+- provider: script
+  skip_cleanup: true
+  on:
+    branch: master
+  script:
+  - curl -T bayan-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ujohn-jasper-doe:$BINTRAY_API_KEY "https://api.bintray.com/content/john-jasper-doe/otus-cpp/homeworks/bayan/$TRAVIS_BUILD_NUMBER/bayan-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
+

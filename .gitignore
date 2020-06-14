@@ -1,0 +1,49 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+bin/
+build/
+
+# CMake
+cmake-build-*/
+
+config*
+Makefile
+build-aux
+test_tmp_*
+libtool
+docs/reference*
+docs/*.html
+docs/*.png
+docs/*-ref.rst
+docs/
+
+
+# Compile and link flag files
+*.user
+
+# Logs
+libtorrent_logs*
+*.log
+
