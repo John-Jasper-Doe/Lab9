@@ -28,7 +28,6 @@ build/
 # CMake
 cmake-build-*/
 
-config*
 Makefile
 build-aux
 test_tmp_*
