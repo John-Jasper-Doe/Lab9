@@ -1,11 +1,29 @@
 BasedOnStyle: Google
-NamespaceIndentation: All
+NamespaceIndentation: None
 BreakBeforeBinaryOperators: NonAssignment
 AlignOperands: false
 DerivePointerAlignment: false
-PointerAlignment: Right
+PointerAlignment: Left
 BinPackArguments: true
 BinPackParameters: true
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 IncludeBlocks: Preserve
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: true
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: true
+  BeforeElse: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+CompactNamespaces: false
+IndentCaseLabels: false
+FixNamespaceComments: false
