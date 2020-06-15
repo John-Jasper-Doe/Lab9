@@ -36,9 +36,15 @@ find_package(Boost COMPONENTS program_options filesystem regex thread REQUIRED)
 
 # Setting options on project
 option(CLANG_FORMAT "Enable clang-format target" ON)
+option(DOCUMENTATION "Build documentation" ON)
 
 if(CLANG_FORMAT)
   include(clang-format)
+endif()
+
+if(DOCUMENTATION)
+  find_package(Doxygen COMPONENTS dot)
+  include(doxygen)
 endif()
 
 # Added source directory
