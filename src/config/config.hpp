@@ -46,15 +46,14 @@ struct config {
 
   static config* instance();
 
- protected:
+protected:
   config() = default;
 };
 
 } /* config */
 } /* bayan */
 
-inline std::istream& operator>>(std::istream& in,
-                                bayan::config::config::check_method& method) {
+inline std::istream& operator>>(std::istream& in, bayan::config::config::check_method& method) {
   using namespace std::string_literals;
   using namespace bayan::config;
 
@@ -70,8 +69,7 @@ inline std::istream& operator>>(std::istream& in,
   return in;
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                bayan::config::config::check_method& method) {
+inline std::ostream& operator<<(std::ostream& os, bayan::config::config::check_method& method) {
   using namespace std::string_literals;
   using namespace bayan::config;
 
