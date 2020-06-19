@@ -20,6 +20,8 @@ void get_param(int argc, char* argv[]) {
   namespace po = boost::program_options;
   namespace bc = bayan::config;
 
+  using namespace std::string_literals;
+
   // clang-format off
   bayan::config::config* cfg = bayan::config::config::instance();
   po::options_description desc("Options");
@@ -27,7 +29,7 @@ void get_param(int argc, char* argv[]) {
       ("help,h", "this help.")
       ("include,i",   po::value(&cfg->include), "list directories to search ('.' by default)")
       ("exclude,x",   po::value(&cfg->exclude), "list directories to exclude")
-      ("mask",        po::value(&cfg->mask), "list file mask to check")
+      ("mask,s",      po::value(&cfg->mask), "list file mask to check")
       ("min_fsize,f", po::value(&cfg->file_size)->default_value(1),
                       "min file size ('1 Byte' by default)")
       (",r",          po::bool_switch(&cfg->recursive)->default_value(false),
@@ -51,6 +53,10 @@ void get_param(int argc, char* argv[]) {
     cfg->include.emplace_back(".");
   }
 
+  if (cfg->mask.empty()) {
+    cfg->mask.emplace(".*");
+  }
+
   if (!cfg->is_valid()) {
     throw std::runtime_error("Invalid arguments");
   }
@@ -62,4 +68,6 @@ int main(int argc, char* argv[]) {
   std::cout << "  Make by Maxim <john.jasper.doe@gmail.com>" << std::endl;
 
   get_param(argc, argv);
+
+  return 0;
 }

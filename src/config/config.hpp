@@ -10,6 +10,9 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
+#include <boost/regex.hpp>
+
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -25,11 +28,13 @@ struct config {
   using opt_key_t = std::string;
   using opt_keys_t = std::vector<opt_key_t>;
 
+  using mask_key_t = std::set<boost::regex>;
+
   enum check_method { crc32, md5 };
 
   opt_keys_t include;
   opt_keys_t exclude;
-  opt_keys_t mask;
+  mask_key_t mask;
 
   std::size_t file_size = 0;
   std::size_t block_size = 0;
@@ -83,6 +88,23 @@ inline std::ostream& operator<<(std::ostream& os, bayan::config::config::check_m
     break;
   }
 
+  return os;
+}
+
+inline std::istream& operator>>(std::istream& in, std::set<boost::regex>& mask) {
+  std::string token;
+  in >> token;
+
+  mask.emplace(token, boost::regex::icase);
+
+  return in;
+}
+
+inline std::ostream& operator<<(std::ostream& os, std::set<boost::regex>& mask) {
+  auto cit = mask.cbegin();
+
+  os << (*cit).str();
+  mask.erase(cit);
   return os;
 }
 
