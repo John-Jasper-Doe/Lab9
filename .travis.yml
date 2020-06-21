@@ -12,6 +12,7 @@ before_script:
 script:
 - cmake .
 - cmake --build .
+- cmake --build . --target docs
 - cmake --build . --target package
 
 env:
