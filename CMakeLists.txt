@@ -36,7 +36,7 @@ find_package(Boost COMPONENTS program_options filesystem regex thread REQUIRED)
 
 # Setting options on project
 option(CLANG_FORMAT "Enable clang-format target" OFF)
-option(DOCUMENTATION "Build documentation" OFF)
+option(DOCUMENTATION "Build documentation" ON)
 
 if(CLANG_FORMAT)
   include(clang-format)
@@ -49,4 +49,20 @@ endif()
 
 # Added source directory
 add_subdirectory(src)
+
+# install to bin folder our binaries
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+
+# generate .deb package
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_CONTACT john.jasper.doe@gmail.com)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+# include will generate proper code for .deb generation
+include(CPack)
 

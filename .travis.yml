@@ -10,7 +10,6 @@ before_script:
 - sudo apt install graphviz -y
 
 script:
-- doxygen Doxyfile
 - cmake .
 - cmake --build .
 - cmake --build . --target package
