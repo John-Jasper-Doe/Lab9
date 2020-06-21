@@ -51,7 +51,7 @@ endif()
 add_subdirectory(src)
 
 # install to bin folder our binaries
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 
 # generate .deb package
 set(CPACK_GENERATOR DEB)
