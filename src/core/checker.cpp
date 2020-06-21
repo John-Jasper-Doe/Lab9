@@ -16,7 +16,44 @@
 namespace bayan {
 namespace core {
 
+namespace bf = boost::filesystem;
+
 const std::size_t kMaxThread = std::max(std::thread::hardware_concurrency(), 1u);
+
+namespace {
+
+std::string calc_hash(const char* buffer, std::size_t size) {
+  std::string res;
+
+  const auto& cfg = config::config::instance();
+  switch (cfg->method) {
+  case config::config::crc32: {
+    boost::crc_32_type result;
+
+    result.process_bytes(buffer, size);
+    res = std::to_string(result.checksum()) + "__";
+    break;
+  }
+
+  case config::config::md5: {
+    boost::uuids::detail::md5 hash;
+    boost::uuids::detail::md5::digest_type digest;
+
+    hash.process_bytes(buffer, size);
+    hash.get_digest(digest);
+    for (int i = 0; i < 4; i++) {
+      res += std::to_string(digest[i]) + "_";
+    }
+
+    res += "__";
+    break;
+  }
+  }
+
+  return res;
+}
+
+} /* :: */
 
 void checker::prepare() noexcept {
   for (std::size_t i = 0; i < kMaxThread; ++i) {
