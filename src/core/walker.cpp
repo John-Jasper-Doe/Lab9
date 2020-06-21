@@ -95,6 +95,8 @@ void walker::run() {
     else
       find_all<bf::directory_iterator>(dir);
   }
+
+  checker_.wait();
 }
 
 template <class DIR_ITER>

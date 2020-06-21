@@ -17,6 +17,7 @@ namespace core {
 
 class checker {
   boost::thread_group pool_;
+  std::atomic_bool is_finished{false};
 
   /* queue path */
   std::mutex mtx_queue_path_;
@@ -28,6 +29,7 @@ public:
 
   void prepare() noexcept;
   void append(const boost::filesystem::path& path) noexcept;
+  void wait() noexcept;
 
 protected:
   void worker() noexcept;

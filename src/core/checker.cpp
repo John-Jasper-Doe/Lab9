@@ -27,6 +27,12 @@ void checker::append(const boost::filesystem::path& path) noexcept {
   cond_add_path_.notify_one();
 }
 
+void checker::wait() noexcept {
+  is_finished = true;
+  cond_add_path_.notify_all();
+  pool_.join_all();
+}
+
 void checker::worker() noexcept {}
 
 } /* core:: */
