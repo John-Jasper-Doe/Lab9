@@ -23,14 +23,64 @@ void no_push<bf::recursive_directory_iterator>(bf::recursive_directory_iterator&
   it.no_push();
 }
 
-bool is_file_satisfy_conditions(const boost::filesystem::path& path) {
-  (void)path;
-  return true;
+/**
+ * @brief is_path_exclude
+ * @param path
+ * @return
+ */
+bool is_path_exclude(const boost::filesystem::path& path) {
+  const auto cfg = config::config::instance();
+
+  for (const auto& row : {bf::canonical(path).string(), path.relative_path().string()}) {
+    for (auto& ex : cfg->exclude) {
+      if (row.find(ex) != std::string::npos)
+        return true;
+    }
+  }
+  return false;
 }
 
-bool is_path_exclude(const boost::filesystem::path& path) {
-  (void)path;
-  return true;
+bool is_path_match_size(const boost::filesystem::path& path) noexcept {
+  std::size_t f_size = 0;
+  try {
+    f_size = boost::filesystem::file_size(path);
+  }
+  catch (boost::filesystem::filesystem_error&) {
+    return false;
+  }
+
+  const auto cfg = config::config::instance();
+  return f_size >= cfg->file_size;
+}
+
+/**
+ * @brief is_path_match_mask
+ * @param path
+ * @return
+ */
+bool is_path_match_mask(const boost::filesystem::path& path) noexcept {
+  const auto cfg = config::config::instance();
+
+  if (cfg->mask.empty())
+    return true;
+
+  static boost::smatch res;
+  for (const auto& mask : cfg->mask) {
+    if (boost::regex_match(path.filename().string(), res, mask))
+      return true;
+  }
+
+  return false;
+}
+
+/**
+ * @brief is_file_satisfy_conditions
+ * @param path
+ * @return
+ */
+bool is_file_satisfy_conditions(const boost::filesystem::path& path) {
+  return !bf::is_directory(path) && is_path_match_mask(path) && is_path_match_size(path)
+      && is_path_exclude(path);
 }
 
 } /* :: */
