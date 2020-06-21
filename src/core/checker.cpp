@@ -4,7 +4,10 @@
  */
 
 #include "checker.hpp"
-#include "walker.hpp"
+#include "config/config.hpp"
+
+#include <boost/crc.hpp>
+#include <boost/uuid/detail/md5.hpp>
 
 #include <algorithm>
 #include <mutex>
@@ -33,7 +36,19 @@ void checker::wait() noexcept {
   pool_.join_all();
 }
 
-void checker::worker() noexcept {}
+void checker::worker() noexcept {
+  while (true) {
+    std::unique_lock<std::mutex> lock(mtx_queue_path_);
+    cond_add_path_.wait(lock,
+                        [this]() -> bool { return !this->queue_path_.empty() || is_finished; });
+    if (queue_path_.empty())
+      break;
+
+    bf::path p = std::move(queue_path_.front());
+    queue_path_.pop();
+    lock.unlock();
+  }
+}
 
 } /* core:: */
 } /* bayan:: */
