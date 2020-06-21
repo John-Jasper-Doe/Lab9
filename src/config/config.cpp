@@ -10,6 +10,7 @@
 
 #include "config.hpp"
 
+/** @brief Namespace of the projet "BAYAN" */
 namespace bayan {
 namespace config {
 

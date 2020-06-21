@@ -1,6 +1,9 @@
 /**
+ * @file walker.cpp
+ * @brief Implementation of the "walker" class.
  *
- *
+ * @author Maxim <john.jasper.doe@gmail.com>
+ * @date 2020
  */
 
 #include "walker.hpp"
@@ -8,7 +11,9 @@
 
 #include <boost/regex.hpp>
 
+/** @brief Namespace of the projet "BAYAN" */
 namespace bayan {
+/** @brief Namespace of the projet "Core" */
 namespace core {
 
 namespace bf = boost::filesystem;
@@ -24,9 +29,10 @@ void no_push<bf::recursive_directory_iterator>(bf::recursive_directory_iterator&
 }
 
 /**
- * @brief is_path_exclude
- * @param path
- * @return
+ * @brief Is path exclude.
+ *
+ * @param [in] path - test path.
+ * @return True if the "path" is excluded from the scan, otherwise - False.
  */
 bool is_path_exclude(const boost::filesystem::path& path) {
   const auto& cfg = config::config::instance();
@@ -40,6 +46,12 @@ bool is_path_exclude(const boost::filesystem::path& path) {
   return false;
 }
 
+/**
+ * @brief Is path match size.
+ *
+ * @param [in] path - test path.
+ * @return True if the "path" matches the given size, otherwise - False.
+ */
 bool is_path_match_size(const boost::filesystem::path& path) noexcept {
   std::size_t f_size = 0;
   try {
@@ -54,9 +66,10 @@ bool is_path_match_size(const boost::filesystem::path& path) noexcept {
 }
 
 /**
- * @brief is_path_match_mask
- * @param path
- * @return
+ * @brief Is path match mask.
+ *
+ * @param [in] path - test path.
+ * @return True if the "path" matches the given mask, otherwise - False.
  */
 bool is_path_match_mask(const boost::filesystem::path& path) noexcept {
   const auto& cfg = config::config::instance();
@@ -74,11 +87,12 @@ bool is_path_match_mask(const boost::filesystem::path& path) noexcept {
 }
 
 /**
- * @brief Is file satisfy conditions
- * @param [in] path -
- * @return
+ * @brief Is path satisfy conditions.
+ *
+ * @param [in] path - test path.
+ * @return True - if it satisfies, otherwise - False.
  */
-bool is_file_satisfy_conditions(const boost::filesystem::path& path) {
+bool is_path_satisfy_conditions(const boost::filesystem::path& path) {
   return !bf::is_directory(path) && is_path_match_mask(path) && is_path_match_size(path)
       && !is_path_exclude(path);
 }
@@ -105,7 +119,7 @@ void walker::print() noexcept {
 
 template <class DIR_ITER>
 void walker::find_all(const boost::filesystem::path& path) noexcept {
-  if (is_file_satisfy_conditions(path)) {
+  if (is_path_satisfy_conditions(path)) {
     checker_.append(path);
     return;
   }
@@ -114,7 +128,7 @@ void walker::find_all(const boost::filesystem::path& path) noexcept {
   DIR_ITER end;
   while (it_dir != end) {
     auto entry = *it_dir;
-    if (is_file_satisfy_conditions(entry)) {
+    if (is_path_satisfy_conditions(entry)) {
       checker_.append(entry);
     }
     else {

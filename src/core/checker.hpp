@@ -1,6 +1,9 @@
 /**
+ * @file checker.hpp
+ * @brief Definition of the "checker" class.
  *
- *
+ * @author Maxim <john.jasper.doe@gmail.com>
+ * @date 2020
  */
 
 #ifndef CHECKER_HPP_
@@ -16,9 +19,14 @@
 #include <queue>
 #include <set>
 
+/** @brief Namespace of the projet "BAYAN" */
 namespace bayan {
+/** @brief Namespace of the projet "Core" */
 namespace core {
 
+/**
+ * @brief The checker class
+ */
 class checker {
   boost::thread_group pool_;
   std::atomic_bool is_finished{false};

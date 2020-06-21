@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-/** @brief The namespace of the entire project. */
+/** @brief Namespace of the projet "BAYAN" */
 namespace bayan {
 
 /** @brief Namespace for working with project settings. */

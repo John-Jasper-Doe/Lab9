@@ -1,6 +1,9 @@
 /**
+ * @file checker.cpp
+ * @brief Implementation of the "checker" class.
  *
- *
+ * @author Maxim <john.jasper.doe@gmail.com>
+ * @date 2020
  */
 
 #include "checker.hpp"
@@ -14,7 +17,9 @@
 #include <mutex>
 #include <thread>
 
+/** @brief Namespace of the projet "BAYAN" */
 namespace bayan {
+/** @brief Namespace of the projet "Core" */
 namespace core {
 
 namespace bf = boost::filesystem;

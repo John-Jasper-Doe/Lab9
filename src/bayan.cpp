@@ -73,6 +73,4 @@ int main(int argc, char* argv[]) {
   bayan::core::walker w;
   w.run();
   w.print();
-
-  return 0;
 }
