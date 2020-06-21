@@ -20,7 +20,7 @@ public:
   walker() = default;
 
   void run();
-  //  void print();
+  void print() noexcept;
 
 protected:
   template <class DIR_ITER>

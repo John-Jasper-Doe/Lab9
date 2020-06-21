@@ -74,13 +74,13 @@ bool is_path_match_mask(const boost::filesystem::path& path) noexcept {
 }
 
 /**
- * @brief is_file_satisfy_conditions
- * @param path
+ * @brief Is file satisfy conditions
+ * @param [in] path -
  * @return
  */
 bool is_file_satisfy_conditions(const boost::filesystem::path& path) {
   return !bf::is_directory(path) && is_path_match_mask(path) && is_path_match_size(path)
-      && is_path_exclude(path);
+      && !is_path_exclude(path);
 }
 
 } /* :: */
@@ -97,6 +97,10 @@ void walker::run() {
   }
 
   checker_.wait();
+}
+
+void walker::print() noexcept {
+  checker_.print();
 }
 
 template <class DIR_ITER>
