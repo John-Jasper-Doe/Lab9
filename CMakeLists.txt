@@ -14,8 +14,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Setting up a project version.
 include(version)
-if (DEFINED ENV{BAYAN_BUILD_NUMBER})
-  set(TIMUS_PATCH ENV{BAYAN_BUILD_NUMBER})
+if (DEFINED ENV{TRAVIS_BUILD_NUMBER})
+  set(BAYAN_PATCH $ENV{TRAVIS_BUILD_NUMBER})
 endif ()
 set(BAYAN_VERSION ${BAYAN_MAJOR}.${BAYAN_MINOR}.${BAYAN_PATCH})
 configure_file(version.hpp.in ${CMAKE_BINARY_DIR}/src/include/version.hpp @ONLY)
