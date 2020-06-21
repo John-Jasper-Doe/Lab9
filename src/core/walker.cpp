@@ -29,7 +29,7 @@ void no_push<bf::recursive_directory_iterator>(bf::recursive_directory_iterator&
  * @return
  */
 bool is_path_exclude(const boost::filesystem::path& path) {
-  const auto cfg = config::config::instance();
+  const auto& cfg = config::config::instance();
 
   for (const auto& row : {bf::canonical(path).string(), path.relative_path().string()}) {
     for (auto& ex : cfg->exclude) {
@@ -49,7 +49,7 @@ bool is_path_match_size(const boost::filesystem::path& path) noexcept {
     return false;
   }
 
-  const auto cfg = config::config::instance();
+  const auto& cfg = config::config::instance();
   return f_size >= cfg->file_size;
 }
 
@@ -59,7 +59,7 @@ bool is_path_match_size(const boost::filesystem::path& path) noexcept {
  * @return
  */
 bool is_path_match_mask(const boost::filesystem::path& path) noexcept {
-  const auto cfg = config::config::instance();
+  const auto& cfg = config::config::instance();
 
   if (cfg->mask.empty())
     return true;
