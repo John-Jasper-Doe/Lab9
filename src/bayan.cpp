@@ -8,12 +8,13 @@
 
 /* See the license in the file "LICENSE.txt" in the root directory. */
 
-#include <iostream>
+#include "config/config.hpp"
+#include "core/walker.hpp"
+#include "version.hpp"
 
 #include <boost/program_options.hpp>
 
-#include "config/config.hpp"
-#include "version.hpp"
+#include <iostream>
 
 /** @brief Getting and setting program parameters. */
 void get_param(int argc, char* argv[]) {
@@ -68,6 +69,10 @@ int main(int argc, char* argv[]) {
   std::cout << "  Make by Maxim <john.jasper.doe@gmail.com>" << std::endl;
 
   get_param(argc, argv);
+
+  bayan::core::walker w;
+  w.run();
+  w.print();
 
   return 0;
 }
