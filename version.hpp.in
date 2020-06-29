@@ -1,0 +1,17 @@
+/** @file
+ *
+ */
+
+/* See the license in the file "LICENSE.txt" in the root directory. */
+
+#ifndef BAYAN_VERSION_HPP_
+#define BAYAN_VERSION_HPP_
+
+#define BAYAN_MAJOR @BAYAN_MAJOR@
+#define BAYAN_MINOR @BAYAN_MINOR@
+#define BAYAN_PATCH @BAYAN_PATCH@
+
+#define BAYAN_VERSION \
+    (BAYAN_MAJOR * 10000 + BAYAN_MINOR * 100 + BAYAN_PATCH)
+
+#endif /* BAYAN_VERSION_HPP_ */
